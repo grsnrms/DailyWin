@@ -17,7 +17,7 @@ Column(modifier = Modifier.fillMaxSize().padding(15.dp)) {
         } else {
             Text(habit.name, style = MaterialTheme.typography.headlineMedium)
             Text(
-                text = "Current streak: ${habit.streak} days",
+                text = "Current streak: coming soon",
                 modifier = Modifier.padding(vertical = 10.dp)
             )
 
