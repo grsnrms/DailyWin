@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import ph.edu.comteq.dailywin.ui.theme.DailyWinTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
                     val navController = rememberNavController()
+                    val viewModel: HabitViewModel = viewModel()
 
                     // Home screen
                     NavHost(
@@ -32,7 +34,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("home") {
-                            HomeScreen(navController)
+                            HomeScreen(navController, viewModel)
                         }
 
                         composable(
