@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument("habitId") { type = NavType.IntType })
                         ) { backStackEntry ->
                             val id = backStackEntry.arguments?.getInt("habitId") ?: -1
-                            AddEditScreen(navController, id)
+                            AddEditScreen(navController, id, viewModel)
                         }
 
                         composable(
