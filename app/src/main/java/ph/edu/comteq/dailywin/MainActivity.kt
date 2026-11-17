@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("manage") {
-                            ManageScreen(navController)
+                            ManageScreen(navController, viewModel)
                         }
 
                         composable("settings") {
