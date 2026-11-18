@@ -5,21 +5,26 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 class HabitViewModel(application: Application) : AndroidViewModel(application) {
 
-
+    // the database actions (from HabitActions.kt)
     private val actions = AppDatabase.getDatabase(application).habitActions()
 
-
+    // lists the screens will show
     val habits = actions.getAllHabits()
     val completions = actions.getAllCompletions()
 
+    // turns a date into text like "2026-11-18"
+    private fun format(date: Date): String {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+    }
 
     fun today(): String {
-        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return format(Date())
     }
 
     fun addHabit(name: String) {
@@ -40,7 +45,7 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-
+    // ticking the checkbox saves a record, unticking removes it
     fun toggleDone(habitId: Int, isDone: Boolean) {
         viewModelScope.launch {
             if (isDone) {
@@ -49,5 +54,44 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
                 actions.deleteCompletion(habitId, today())
             }
         }
+    }
+
+    // counts how many days in a row the habit was done
+    fun getStreak(doneDates: List<String>): Int {
+        val day = Calendar.getInstance()
+
+        // if today isn't done yet the streak is still alive, so start from yesterday
+        if (format(day.time) !in doneDates) {
+            day.add(Calendar.DAY_OF_YEAR, -1)
+        }
+
+        var streak = 0
+        while (format(day.time) in doneDates) {
+            streak++
+            day.add(Calendar.DAY_OF_YEAR, -1)
+        }
+        return streak
+    }
+
+    // the last 7 days, newest first: (label, done or not)
+    // days before the habit was created are skipped
+    fun getHistory(doneDates: List<String>, createdAt: Long): List<Pair<String, Boolean>> {
+        val created = format(Date(createdAt))
+        val day = Calendar.getInstance()
+        val result = mutableListOf<Pair<String, Boolean>>()
+
+        for (i in 0 until 7) {
+            val text = format(day.time)
+            if (text >= created) {
+                val label = when (i) {
+                    0 -> "Today"
+                    1 -> "Yesterday"
+                    else -> text
+                }
+                result.add(Pair(label, text in doneDates))
+            }
+            day.add(Calendar.DAY_OF_YEAR, -1)
+        }
+        return result
     }
 }

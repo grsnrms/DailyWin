@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                             arguments = listOf(navArgument("habitId") { type = NavType.IntType })
                         ) { backStackEntry ->
                             val id = backStackEntry.arguments?.getInt("habitId") ?: -1
-                            DetailScreen(navController, id)
+                            DetailScreen(navController, id, viewModel)
                         }
 
                         composable("manage") {
