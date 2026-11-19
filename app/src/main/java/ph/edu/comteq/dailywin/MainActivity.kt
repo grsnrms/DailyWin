@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(
-                            route = "add edit/{habitId}",
+                            route = "addedit/{habitId}",
                             arguments = listOf(navArgument("habitId") { type = NavType.IntType })
                         ) { backStackEntry ->
                             val id = backStackEntry.arguments?.getInt("habitId") ?: -1

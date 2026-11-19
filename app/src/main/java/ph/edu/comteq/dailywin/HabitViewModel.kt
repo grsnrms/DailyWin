@@ -11,14 +11,13 @@ import java.util.Locale
 
 class HabitViewModel(application: Application) : AndroidViewModel(application) {
 
-    // the database actions (from HabitActions.kt)
+
     private val actions = AppDatabase.getDatabase(application).habitActions()
 
-    // lists the screens will show
+
     val habits = actions.getAllHabits()
     val completions = actions.getAllCompletions()
 
-    // turns a date into text like "2026-11-18"
     private fun format(date: Date): String {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
@@ -44,8 +43,6 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
             actions.deleteHabit(habit)
         }
     }
-
-    // ticking the checkbox saves a record, unticking removes it
     fun toggleDone(habitId: Int, isDone: Boolean) {
         viewModelScope.launch {
             if (isDone) {
@@ -56,7 +53,7 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    // counts how many days in a row the habit was done
+
     fun getStreak(doneDates: List<String>): Int {
         val day = Calendar.getInstance()
 
@@ -73,8 +70,6 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
         return streak
     }
 
-    // the last 7 days, newest first: (label, done or not)
-    // days before the habit was created are skipped
     fun getHistory(doneDates: List<String>, createdAt: Long): List<Pair<String, Boolean>> {
         val created = format(Date(createdAt))
         val day = Calendar.getInstance()

@@ -13,8 +13,6 @@ fun DetailScreen(navController: NavController, habitId: Int, viewModel: HabitVie
     val completions by viewModel.completions.collectAsState(initial = emptyList())
 
     val habit = habits.find { it.id == habitId }
-
-
     val doneDates = completions.filter { it.habitId == habitId }.map { it.date }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
