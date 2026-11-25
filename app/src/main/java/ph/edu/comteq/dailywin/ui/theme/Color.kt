@@ -2,10 +2,10 @@ package ph.edu.comteq.dailywin.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val Green = Color(0xFF2E9E6B)
+val GreenDark = Color(0xFF1B6B47)
+val GreenLight = Color(0xFFD9F2E4)
+val Cream = Color(0xFFF6FAF7)
+val White = Color(0xFFFFFFFF)
+val TextDark = Color(0xFF1C2B24)
+val TextGray = Color(0xFF6B7A72)
